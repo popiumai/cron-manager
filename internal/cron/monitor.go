@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"os/exec"
+	"strings"
 	"sync"
 	"time"
 
@@ -72,6 +73,7 @@ func evaluateJob(ctx context.Context, logger *logrus.Logger, store *Store, job J
 	// Fetch the machine associated with the job
 	machine, err := client.MachineGet(ctx, job.MachineID.String)
 	if err != nil {
+		errStr := err.Error()
 		if exitErr, ok := err.(*exec.ExitError); ok {
 			if exitErr.ExitCode() == 404 {
 				// Machines are queryable up to 48 hours after they are destroyed.
@@ -82,8 +84,17 @@ func evaluateJob(ctx context.Context, logger *logrus.Logger, store *Store, job J
 				}
 				return nil
 			}
-			log.WithError(err).Errorf("failed to get machine %s: %v", job.MachineID.String, err)
 		}
+		// Unauthorized or forbidden: mark job as failed to stop retry loop
+		if strings.Contains(errStr, "unauthorized") || strings.Contains(errStr, "forbidden") {
+			log.WithError(err).Errorf("failed to get machine %s (marking job as failed): %v", job.MachineID.String, err)
+			if failErr := store.FailJob(ctx, job.ID, -1, "cannot access machine: "+errStr); failErr != nil {
+				log.WithError(failErr).Errorf("failed to update job %d status", job.ID)
+			}
+			return nil
+		}
+		log.WithError(err).Errorf("failed to get machine %s: %v", job.MachineID.String, err)
+		return nil
 	}
 
 	log.Debugf("Monitoring job")
