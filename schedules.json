@@ -19,5 +19,26 @@
         "policy": "no"
       }
     }
+  },
+  {
+    "name": "spotify-scrape-cleanup",
+    "app_name": "popium",
+    "schedule": "0 2 * * *",
+    "region": "iad",
+    "command": "/bin/bash -c 'curl -sSL -X POST https://www.popium.ai/api/cron/spotify-scrape-cleanup -H \"Authorization: Bearer $CRON_SECRET\"'",
+    "command_timeout": 60,
+    "enabled": true,
+    "config": {
+      "image": "registry.fly.io/popium:deployment-01KHBD3PS04AVM4WNCJ690H7YT",
+      "auto_destroy": true,
+      "guest": {
+        "cpu_kind": "shared",
+        "cpus": 1,
+        "memory_mb": 256
+      },
+      "restart": {
+        "policy": "no"
+      }
+    }
   }
 ]
