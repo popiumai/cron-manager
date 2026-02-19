@@ -44,7 +44,7 @@
   {
     "name": "chart-ingest-dispatch",
     "app_name": "popium",
-    "schedule": "*/30 * * * *",
+    "schedule": "*/15 * * * *",
     "region": "iad",
     "command": "/bin/bash -c 'curl -sSL -X POST https://www.popium.ai/api/cron/chart-ingest-dispatch -H \"Authorization: Bearer $CRON_SECRET\"'",
     "command_timeout": 120,
