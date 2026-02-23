@@ -8,7 +8,7 @@
     "command_timeout": 120,
     "enabled": true,
     "config": {
-      "image": "registry.fly.io/popium:deployment-01KHBD3PS04AVM4WNCJ690H7YT",
+      "image": "registry.fly.io/popium:latest",
       "auto_destroy": true,
       "guest": {
         "cpu_kind": "shared",
@@ -29,7 +29,7 @@
     "command_timeout": 60,
     "enabled": true,
     "config": {
-      "image": "registry.fly.io/popium:deployment-01KHBD3PS04AVM4WNCJ690H7YT",
+      "image": "registry.fly.io/popium:latest",
       "auto_destroy": true,
       "guest": {
         "cpu_kind": "shared",
@@ -50,7 +50,7 @@
     "command_timeout": 120,
     "enabled": true,
     "config": {
-      "image": "registry.fly.io/popium:deployment-01KHBD3PS04AVM4WNCJ690H7YT",
+      "image": "registry.fly.io/popium:latest",
       "auto_destroy": true,
       "guest": {
         "cpu_kind": "shared",
