@@ -85,6 +85,14 @@ func evaluateJob(ctx context.Context, logger *logrus.Logger, store *Store, job J
 				return nil
 			}
 		}
+		// Machine was auto-destroyed or removed; Fly API returns "machine not found" (not always as exec.ExitError 404).
+		if strings.Contains(strings.ToLower(errStr), "machine not found") || strings.Contains(strings.ToLower(errStr), "not found") {
+			log.WithError(err).Warnf("machine %s no longer exists (likely auto-destroyed), resolving job", job.MachineID.String)
+			if err := store.FailJob(ctx, job.ID, -1, "machine destroyed before we could interpret the results"); err != nil {
+				log.WithError(err).Errorf("failed to update job %d status", job.ID)
+			}
+			return nil
+		}
 		// Unauthorized or forbidden: mark job as failed to stop retry loop
 		if strings.Contains(errStr, "unauthorized") || strings.Contains(errStr, "forbidden") {
 			log.WithError(err).Errorf("failed to get machine %s (marking job as failed): %v", job.MachineID.String, err)
