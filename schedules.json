@@ -61,5 +61,26 @@
         "policy": "no"
       }
     }
+  },
+  {
+    "name": "zapier-post-process",
+    "app_name": "popium",
+    "schedule": "*/10 * * * *",
+    "region": "iad",
+    "command": "/bin/bash -c 'curl -sSL -X POST https://www.popium.ai/api/cron/zapier-post-process -H \"Authorization: Bearer $CRON_SECRET\"'",
+    "command_timeout": 600,
+    "enabled": true,
+    "config": {
+      "image": "registry.fly.io/popium:latest",
+      "auto_destroy": true,
+      "guest": {
+        "cpu_kind": "shared",
+        "cpus": 1,
+        "memory_mb": 256
+      },
+      "restart": {
+        "policy": "no"
+      }
+    }
   }
 ]
