@@ -75,8 +75,8 @@
       "auto_destroy": true,
       "guest": {
         "cpu_kind": "shared",
-        "cpus": 1,
-        "memory_mb": 256
+        "cpus": 4,
+        "memory_mb": 4096
       },
       "restart": {
         "policy": "no"
