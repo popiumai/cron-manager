@@ -65,9 +65,9 @@
   {
     "name": "zapier-post-process",
     "app_name": "popium",
-    "schedule": "*/10 * * * *",
+    "schedule": "*/5 * * * *",
     "region": "iad",
-    "command": "/bin/bash -c 'scripts/cron-zapier-run.sh'",
+    "command": "/bin/bash -c 'bash scripts/cron-zapier-run.sh'",
     "command_timeout": 600,
     "enabled": true,
     "config": {
