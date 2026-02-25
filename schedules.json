@@ -67,7 +67,7 @@
     "app_name": "popium",
     "schedule": "*/10 * * * *",
     "region": "iad",
-    "command": "/bin/bash -c 'curl -sSL -X POST https://www.popium.ai/api/cron/zapier-post-process -H \"Authorization: Bearer $CRON_SECRET\"'",
+    "command": "/bin/bash -c 'scripts/cron-zapier-run.sh'",
     "command_timeout": 600,
     "enabled": true,
     "config": {
