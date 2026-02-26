@@ -2,7 +2,7 @@
   {
     "name": "spotify-scrape-dispatch",
     "app_name": "popium",
-    "schedule": "*/15 * * * *",
+    "schedule": "*/5 * * * *",
     "region": "iad",
     "command": "/bin/bash -c 'curl -sSL -X POST https://www.popium.ai/api/cron/spotify-scrape-dispatch -H \"Authorization: Bearer $CRON_SECRET\"'",
     "command_timeout": 120,
