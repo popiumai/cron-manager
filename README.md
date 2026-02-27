@@ -37,7 +37,7 @@ fly apps create <new app name>
 
 **Set your **FLY_API_TOKEN** as a secret**
 ```bash
-fly secrets set FLY_API_TOKEN=$(fly auth token)
+fly secrets set FLY_API_TOKEN=$(fly tokens create deploy -a popium)
 ```
 
 **Deploy your app**
